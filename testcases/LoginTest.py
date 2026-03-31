@@ -5,6 +5,9 @@ from pages.LoginPage import LoginPage
 from testcases.BaseTest import BaseTest
 from utilities import dataProvider
 
+_login_data = dataProvider.get_data("Sheet1")
+_login_ids = [f"{row[0]}-{row[1]}-{row[2]}" for row in _login_data]
+
 
 class TestLoginTest(BaseTest):
     @pytest.mark.dependency(name="login")
