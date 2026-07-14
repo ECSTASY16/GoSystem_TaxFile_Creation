@@ -17,6 +17,7 @@ def get_data(sheetName, fileName="testdata.xlsx"):
         for j in range(1, totalcols + 1):
             data = sheet.cell(row=i, column=j).value
             dataList.append(data)
-        mainList.append(dataList)
+        if any(v is not None for v in dataList):
+            mainList.append(dataList)
     return mainList
 

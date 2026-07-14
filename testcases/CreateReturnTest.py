@@ -18,6 +18,7 @@ class TestCreateReturnTest(BaseTest):
             locator_col = excel_util.get_col_by_header(EXCEL_PATH, SHEET_NAME, "Locator")
             for row_num, row in enumerate(dataProvider.get_data(SHEET_NAME, "ReturnDetails.xlsx"), start=2):
                 Year, Type, Fname, Lname, SSN, DOB, Address1, Address2, Apartment, City, County, State, Zip, *_ = row
+
                 enter_page = CreateNewReturn(page)\
                 .select_createReturn()\
                 .create_new_Return()\
