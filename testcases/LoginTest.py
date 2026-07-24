@@ -10,7 +10,9 @@ _login_ids = [f"{row[0]}-{row[1]}-{row[2]}" for row in _login_data]
 
 
 class TestLoginTest(BaseTest):
-    @pytest.mark.dependency(name="login")
+    @pytest.mark.regression
+    @pytest.mark.smoke
+    @pytest.mark.dependency(name="login", scope='session')
     @pytest.mark.parametrize(("LoginID", "Firm", "Location", "Password"), _login_data, ids=_login_ids)
     def test_login(self, page, LoginID, Firm, Location, Password):
         allure.dynamic.parameter("Password", Password, mode=allure.parameter_mode.MASKED)

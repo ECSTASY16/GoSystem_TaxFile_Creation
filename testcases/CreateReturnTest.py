@@ -1,5 +1,6 @@
 import os
 import allure
+import pytest
 
 from pages.BasePage import BasePage
 from pages.HomePage import CreateNewReturn
@@ -13,6 +14,7 @@ SHEET_NAME = "ReturnDetails"
 
 class TestCreateReturnTest(BaseTest):
 
+    @pytest.mark.dependency(depends=["login"], scope='session')
     def test_createReturn(self, page):
         with allure.step("*******Executing Create Return Test********"):
             locator_col = excel_util.get_col_by_header(EXCEL_PATH, SHEET_NAME, "Locator")

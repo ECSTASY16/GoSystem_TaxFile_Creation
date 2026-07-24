@@ -35,6 +35,42 @@ class BasePage:
             self.page.get_by_text(text, exact=exact).click(timeout=timeout * 1000)
             log.logger.info(f"clicked on element with text: {text}")
 
+    def type_by_placeholder(self, locator, value, exact=True):
+        """Type into an input field by its placeholder text. Locator should contain the placeholder value in conf.ini"""
+        placeholder = configReader.readConfig("locators", locator)
+        with allure.step(f"Typing in element with placeholder '{placeholder}' and entered value as {value}"):
+            self.page.get_by_placeholder(placeholder, exact=exact).fill(value)
+            log.logger.info(f"Typed in element with placeholder '{placeholder}' and entered value as {value}")
+
+    def click_by_placeholder(self, locator, exact=True, timeout=10):
+        """Click element by its placeholder text. Locator should contain the placeholder value in conf.ini"""
+        placeholder = configReader.readConfig("locators", locator)
+        with allure.step(f"Clicking on element with placeholder: {placeholder}"):
+            self.page.get_by_placeholder(placeholder, exact=exact).click(timeout=timeout * 1000)
+            log.logger.info(f"Clicked on element with placeholder: {placeholder}")
+
+    def verify_placeholder_visible(self, locator, exact=True, timeout=10000):
+        """Verify element with placeholder is visible"""
+        placeholder = configReader.readConfig("locators", locator)
+        with allure.step(f"Verifying element with placeholder '{placeholder}' is visible"):
+            expect(self.page.get_by_placeholder(placeholder, exact=exact)).to_be_visible(timeout=timeout)
+            log.logger.info(f"Verified element with placeholder '{placeholder}' is visible")
+
+    def get_value_by_placeholder(self, locator, exact=True):
+        """Get input value from element by its placeholder text"""
+        placeholder = configReader.readConfig("locators", locator)
+        with allure.step(f"Getting value from element with placeholder '{placeholder}'"):
+            value = self.page.get_by_placeholder(placeholder, exact=exact).input_value()
+            log.logger.info(f"Got value from element with placeholder '{placeholder}': {value}")
+            return value
+
+    def clear_by_placeholder(self, locator, exact=True):
+        """Clear text from input field by its placeholder"""
+        placeholder = configReader.readConfig("locators", locator)
+        with allure.step(f"Clearing text from element with placeholder '{placeholder}'"):
+            self.page.get_by_placeholder(placeholder, exact=exact).clear()
+            log.logger.info(f"Cleared text from element with placeholder '{placeholder}'")
+
     def verify_text(self,locator,expected_key_text,timeout):
             locator=configReader.readConfig("locators",locator)
             expected_text=configReader.readConfig("locators",expected_key_text)
@@ -336,3 +372,5 @@ class BasePage:
         self.click("logout_CSS")
         log.logger.info("Logged Out")
         return self
+
+
